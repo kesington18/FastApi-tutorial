@@ -14,19 +14,19 @@ class Student(BaseModel):
 students_db = []
 
 # GET: See all students
-@app.get("/students")
+@app.get("/getStudents")
 def get_students():
     return students_db
 
 # POST: Add a student using the Body Model
-@app.post("/students")
+@app.post("/createStudents")
 def create_student(student: Student):
     # .dict() or .model_dump() converts the object to a dictionary
     students_db.append(student.model_dump())
     return {"message": "Student added successfully", "data": student}
 
 # GET: Find one student
-@app.get("/students/{student_id}")
+@app.get("/getStudent/{student_id}")
 def get_student(student_id: int):
     for s in students_db:
         if s["id"] == student_id:
@@ -34,7 +34,7 @@ def get_student(student_id: int):
     return {"error": "Student not found"}
 
 # DELETE: Remove a student
-@app.delete("/students/{student_id}")
+@app.delete("/deleteStudents/{student_id}")
 def delete_student(student_id: int):
     for s in students_db:
         if s["id"] == student_id:
