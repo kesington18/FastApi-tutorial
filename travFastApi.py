@@ -1,9 +1,10 @@
 from fastapi import FastAPI
+from app.routes.issues import router as issues_router
 from sentry_sdk.envelope import Item
 
 app = FastAPI()
 
-items = [
+'''items = [
     {'id': 1, 'name': 'Item One'},
     {'id': 2, 'name': 'Item Two'},
     {'id': 3, 'name': 'Item Three'},
@@ -40,4 +41,6 @@ def create_item(item: dict):
         "success": True,
         "response": "success",
         'data': items
-    }
+    }'''
+
+app.include_router(issues_router)
