@@ -9,6 +9,7 @@ def load_data():
         with open(DATA_FILE, "r") as f:
             content = f.read()
             if content.strip():
+                print(json.loads(content))
                 return json.loads(content)
     return []
 
