@@ -11,12 +11,17 @@ class Student(BaseModel):
     age: int
     course: str
 
+class Output(BaseModel):
+    success: bool
+    message: str
+    data: Student
+
 # Our in-memory list
 students_db = []
 
 
 # GET: See all students
-@app.get("/api/v1/students", status_code=status.HTTP_200_OK)
+@app.get("/api/v1/students", status_code=status.HTTP_200_OK, response_model=list[Output])
 def get_students(id: int | None = None,name: str | None = None,age: int | None = None,course: str | None = None,skip: int = 0, limit: int = 10):
 
     result = students_db
@@ -56,7 +61,7 @@ def create_student(student: Student):
     }
 
 # GET: Find one student
-@app.get("/api/v1/students/{student_id}", status_code=status.HTTP_200_OK)
+@app.get("/api/v1/students/{student_id}", status_code=status.HTTP_200_OK, response_model=Output)
 def get_student(student_id: int):
     for s in students_db:
         if s["id"] == student_id:
@@ -71,7 +76,7 @@ def get_student(student_id: int):
     )
 
 # DELETE: Remove a student
-@app.delete("/api/v1/students/{student_id}", status_code=status.HTTP_200_OK)
+@app.delete("/api/v1/students/{student_id}", status_code=status.HTTP_200_OK, response_model=Output)
 def delete_student(student_id: int):
     for s in students_db:
         if s["id"] == student_id:
